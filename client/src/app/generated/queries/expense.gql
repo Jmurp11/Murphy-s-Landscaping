@@ -37,8 +37,8 @@ query expenses{
   }
 }
 
-query expense($data: String!){
-  expense(id: $data) {
+query expense($data: ExpenseQueryInput!){
+  expense(input: $data) {
     id
     cost
     job {

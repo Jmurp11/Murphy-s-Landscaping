@@ -1,0 +1,63 @@
+<mat-form-field>
+  <mat-label>Filter</mat-label>
+  <input matInput (keyup)="applyFilter($event)" placeholder="Filter" #input>
+</mat-form-field>
+
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="jobs" matSort>
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+      <td mat-cell *matCellDef="let row"> {{row.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="customer">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Customer </th>
+      <td mat-cell *matCellDef="let row"> {{ row.customer.fullName }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="landscaper">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Landscaper </th>
+      <td mat-cell *matCellDef="let row"> {{ (row.employee) ? row.employee.fullName : 'Unassigned' }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="jobType">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Job Type </th>
+      <td mat-cell *matCellDef="let row"> {{row.jobType}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cost">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Cost </th>
+      <td mat-cell *matCellDef="let row"> {{row.cost}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="dateRequested">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Requested </th>
+      <td mat-cell *matCellDef="let row"> {{row.dateRequested}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="isCompleted">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Completed </th>
+      <td mat-cell *matCellDef="let row"> {{(row.isCompleted) ? 'Yes' : 'No'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="dateCompleted">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Date Completed </th>
+      <td mat-cell *matCellDef="let row"> {{(row.dateCompleted) ? row.dateCompleted : 'Incomplete'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="isPaid">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Paid </th>
+      <td mat-cell *matCellDef="let row"> {{(row.isPaid) ? 'Yes' : 'No' }} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="navigate(row.id)"></tr>
+
+    <tr class="mat-row" *matNoDataRow>
+      <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+    </tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>

@@ -108,11 +108,19 @@ export type ExpenseInput = {
   expenseType: Scalars['String'];
 };
 
+export type ExpenseQueryInput = {
+  id: Scalars['String'];
+};
+
 export type JobInput = {
   customer: Scalars['String'];
   employee: Scalars['String'];
   cost: Scalars['Float'];
   jobType: Scalars['String'];
+};
+
+export type JobQueryInput = {
+  id: Scalars['String'];
 };
 
 export type ChangePasswordInput = {
@@ -159,12 +167,12 @@ export type QueryAddressArgs = {
 
 
 export type QueryExpenseArgs = {
-  id: Scalars['String'];
+  input: ExpenseQueryInput;
 };
 
 
 export type QueryJobArgs = {
-  id: Scalars['String'];
+  input: JobQueryInput;
 };
 
 
@@ -540,7 +548,7 @@ export type ExpensesQuery = (
 );
 
 export type ExpenseQueryVariables = Exact<{
-  data: Scalars['String'];
+  data: ExpenseQueryInput;
 }>;
 
 
@@ -593,7 +601,7 @@ export type JobsQuery = (
 );
 
 export type JobQueryVariables = Exact<{
-  data: Scalars['String'];
+  data: JobQueryInput;
 }>;
 
 
@@ -1060,8 +1068,8 @@ export const ExpensesDocument = gql`
     
   }
 export const ExpenseDocument = gql`
-    query expense($data: String!) {
-  expense(id: $data) {
+    query expense($data: ExpenseQueryInput!) {
+  expense(input: $data) {
     id
     cost
     job {
@@ -1155,8 +1163,8 @@ export const JobsDocument = gql`
     
   }
 export const JobDocument = gql`
-    query job($data: String!) {
-  job(id: $data) {
+    query job($data: JobQueryInput!) {
+  job(input: $data) {
     id
     customer {
       firstName

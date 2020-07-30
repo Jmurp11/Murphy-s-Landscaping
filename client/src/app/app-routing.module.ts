@@ -4,6 +4,10 @@ import { LandingComponent } from './landing/landing.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { UsersComponent } from './users/users.component';
 import { UserDetailComponent } from './users/user-detail/user-detail.component';
+import { JobDetailComponent } from './jobs/job-detail/job-detail.component';
+import { JobsComponent } from './jobs/jobs.component';
+import { ExpensesComponent } from './expenses/expenses.component';
+import { ExpenseDetailComponent } from './expenses/expense-detail/expense-detail.component';
 import { AuthGuard } from './auth/auth.guard';
 import { SigninComponent } from './auth/signin/signin.component';
 import { RegisterComponent } from './auth/register/register.component';
@@ -46,6 +50,26 @@ const routes: Routes = [
               title: 'User',
               breadcrumb: 'User'
             }
+          }
+        ]
+      },
+      {
+        path: 'jobs',
+        component: JobsComponent,
+        children: [
+          {
+            path: ':id',
+            component: JobDetailComponent
+          }
+        ]
+      },
+      {
+        path: 'expenses',
+        component: ExpensesComponent,
+        children: [
+          {
+            path: ':id',
+            component: ExpenseDetailComponent
           }
         ]
       },

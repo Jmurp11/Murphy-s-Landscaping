@@ -6,23 +6,25 @@ import { MatSort } from '@angular/material/sort';
 import { ApolloAngularSDK } from 'src/app/generated/graphql';
 import { Router } from '@angular/router';
 
-export interface UserData {
-  name: string;
-  role: string;
-  email: string;
-  phone: number;
+export interface ExpenseData {
+  id: string;
+  jobId: string;
+  expenseType: string;
+  cost: number;
+  customer: string;
+  jobType: string;
 }
 
 @Component({
-  selector: 'app-user-table',
-  templateUrl: './user-table.component.html',
-  styleUrls: ['./user-table.component.sass']
+  selector: 'app-expense-table',
+  templateUrl: './expense-table.component.html',
+  styleUrls: ['./expense-table.component.sass']
 })
-export class UserTableComponent implements OnInit, OnDestroy {
-  userSub: Subscription;
-  users: any[];
+export class ExpenseTableComponent implements OnInit, OnDestroy {
+  expenseSub: Subscription;
+  expenses: any[];
   displayedColumns: string[];
-  dataSource: MatTableDataSource<UserData>;
+  dataSource: MatTableDataSource<ExpenseData>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -34,18 +36,19 @@ export class UserTableComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.displayedColumns = [
-      'name',
-      'role',
-      'email',
-      'phone',
-      'confirmed'
+      'id',
+      'jobId',
+      'expenseType',
+      'cost',
+      'customer',
+      'jobType'
     ];
 
-    this.userSub = this.apolloSdk.users()
+    this.expenseSub = this.apolloSdk.expenses()
       .subscribe(data => {
-        this.users = data.data.users;
-        console.log(this.users);
-        this.dataSource = new MatTableDataSource(this.users);
+        this.expenses = data.data.expenses;
+        console.log(this.expenses);
+        this.dataSource = new MatTableDataSource(this.expenses);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });
@@ -61,10 +64,11 @@ export class UserTableComponent implements OnInit, OnDestroy {
   }
 
   navigate(id: string) {
-    return this.router.navigate([`./users/${id}`]);
+    console.log(id);
+    return this.router.navigate([`./expenses/${id}`]);
   }
 
   ngOnDestroy(): void {
-    this.userSub.unsubscribe();
+    this.expenseSub.unsubscribe();
   }
 }

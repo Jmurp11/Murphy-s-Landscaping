@@ -14,5 +14,4 @@ export class JobInput {
   @Field()
   jobType!: string;
   
-  
 }

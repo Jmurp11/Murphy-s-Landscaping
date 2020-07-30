@@ -19,11 +19,11 @@ export class Expense extends BaseEntity {
     @Column('float')
     cost!: number;
 
-    @ManyToOne(() => Job, {
+    @ManyToOne(() => Job,  {
         eager: true
     })
-    @Field(() => Job)
-    @Column('uuid')
+    @Field(() => Job, { nullable: true } )
+    @Column('uuid', { nullable: true })
     job!: string;
 
     @Field(() => String)

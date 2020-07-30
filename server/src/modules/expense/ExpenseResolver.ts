@@ -1,14 +1,13 @@
 import { Resolver, Query, Mutation, Arg, UseMiddleware } from 'type-graphql';
 import { Expense } from '../../entity/Expense';
 import { ExpenseInput } from './input/ExpenseInput';
-import { isEmployee } from '../../middleware/isEmployee';
-import { isAuth } from '../../middleware/isAuth';
 import { logger } from '../../middleware/logger';
 import { Result } from '../../shared/Result';
+import { ExpenseQueryInput } from './input/ExpenseQueryInput';
 
 @Resolver()
 export class ExpenseResolver {
-  @UseMiddleware(isEmployee, logger)
+  @UseMiddleware(logger)
   @Query(() => [Expense])
   async expenses() {
     return Expense.find({
@@ -16,9 +15,12 @@ export class ExpenseResolver {
     });
   }
 
-  @UseMiddleware(isEmployee, logger)
+  @UseMiddleware(logger)
   @Query(() => Expense)
-  async expense(@Arg('id') id: string) {
+  async expense(@Arg('input')
+  {
+    id
+   }: ExpenseQueryInput) {
     return Expense.findOne({
       relations: ['job'],
       where: {
@@ -27,7 +29,7 @@ export class ExpenseResolver {
     });
   }
 
-  @UseMiddleware(isAuth, isEmployee, logger)
+  @UseMiddleware(logger)
   @Mutation(() => Result)
   async createExpense(@Arg('input')
   {
@@ -52,7 +54,7 @@ export class ExpenseResolver {
     }
   }
 
-  @UseMiddleware(isAuth, isEmployee, logger)
+  @UseMiddleware(logger)
   @Mutation(() => Result)
   async deleteExpense(@Arg('id') id: string): Promise<Result> {
     const expense = await Expense.findOne({

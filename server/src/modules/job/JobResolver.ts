@@ -5,10 +5,11 @@ import { isEmployee } from '../../middleware/isEmployee';
 import { isAuth } from '../../middleware/isAuth';
 import { logger } from '../../middleware/logger';
 import { Result } from '../../shared/Result';
+import { JobQueryInput } from './input/JobQueryInput';
 
 @Resolver()
 export class JobResolver {
-  @UseMiddleware(isEmployee, logger)
+  @UseMiddleware(logger)
   @Query(() => [Job])
   async jobs() {
     return Job.find({
@@ -29,7 +30,9 @@ export class JobResolver {
 
   @UseMiddleware(logger)
   @Query(() => Job)
-  async job(@Arg('id') id: string) {
+  async job(@Arg('input') {
+    id
+   }: JobQueryInput) {
     return Job.findOne({
       relations: ['customer', 'employee', 'expenses'],
       where: {

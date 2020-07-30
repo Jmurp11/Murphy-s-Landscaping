@@ -39,7 +39,7 @@ export class Job extends BaseEntity {
     @Column('timestamp')
     dateRequested!: string;
 
-    @Field(() => Date)
+    @Field(() => Date, { nullable: true })
     @Column('timestamp', { nullable: true })
     dateCompleted!: string;
 
@@ -47,7 +47,7 @@ export class Job extends BaseEntity {
     @Column('float')
     cost!: number;
 
-    @Field(() => Date)
+    @Field(() => Date, { nullable: true })
     @Column('timestamp', { nullable: true })
     datePaid!: string;
 

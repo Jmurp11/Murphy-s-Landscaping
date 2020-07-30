@@ -6,23 +6,29 @@ import { MatSort } from '@angular/material/sort';
 import { ApolloAngularSDK } from 'src/app/generated/graphql';
 import { Router } from '@angular/router';
 
-export interface UserData {
-  name: string;
-  role: string;
-  email: string;
-  phone: number;
+export interface JobData {
+  id: string;
+  customer: string;
+  landscaper: string;
+  jobType: string;
+  cost: number;
+  dateRequested: string;
+  isCompleted: boolean;
+  dateCompleted: string;
+  isPaid: boolean;
+
 }
 
 @Component({
-  selector: 'app-user-table',
-  templateUrl: './user-table.component.html',
-  styleUrls: ['./user-table.component.sass']
+  selector: 'app-job-table',
+  templateUrl: './job-table.component.html',
+  styleUrls: ['./job-table.component.sass']
 })
-export class UserTableComponent implements OnInit, OnDestroy {
-  userSub: Subscription;
-  users: any[];
+export class JobTableComponent implements OnInit, OnDestroy {
+  jobSub: Subscription;
+  jobs: any[];
   displayedColumns: string[];
-  dataSource: MatTableDataSource<UserData>;
+  dataSource: MatTableDataSource<JobData>;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -34,18 +40,22 @@ export class UserTableComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.displayedColumns = [
-      'name',
-      'role',
-      'email',
-      'phone',
-      'confirmed'
+      'id',
+      'customer',
+      'landscaper',
+      'jobType',
+      'cost',
+      'dateRequested',
+      'isCompleted',
+      'dateCompleted',
+      'isPaid'
     ];
 
-    this.userSub = this.apolloSdk.users()
+    this.jobSub = this.apolloSdk.jobs()
       .subscribe(data => {
-        this.users = data.data.users;
-        console.log(this.users);
-        this.dataSource = new MatTableDataSource(this.users);
+        this.jobs = data.data.jobs;
+        console.log(this.jobs);
+        this.dataSource = new MatTableDataSource(this.jobs);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });
@@ -61,10 +71,11 @@ export class UserTableComponent implements OnInit, OnDestroy {
   }
 
   navigate(id: string) {
-    return this.router.navigate([`./users/${id}`]);
+    console.log(id);
+    return this.router.navigate([`./jobs/${id}`]);
   }
 
   ngOnDestroy(): void {
-    this.userSub.unsubscribe();
+    this.jobSub.unsubscribe();
   }
 }

@@ -36,8 +36,8 @@ query jobs{
   }
 }
 
-query job($data: String!){
-  job(id: $data) {
+query job($data: JobQueryInput!){
+  job(input: $data) {
     id
     customer{
         firstName
