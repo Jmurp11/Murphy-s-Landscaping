@@ -1,1 +1,15 @@
-<p>dashboard</p>
+<div>
+  <span>
+    <button mat-raised-button color="primary" (click)="navigate('users')">Users</button>
+  </span>
+
+  <span>
+  <button mat-raised-button color="primary" (click)="navigate('jobs')">Jobs</button>
+  </span>
+
+  <span>
+    <button mat-raised-button color="primary" (click)="navigate('expenses')">Expenses</button>
+  </span>
+</div>
+
+<router-outlet></router-outlet>

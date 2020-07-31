@@ -94,7 +94,7 @@ export class AuthStoreService extends ObservableStore<StoreState> implements OnI
         new Date(userData._tokenExpiration).getTime() -
         new Date().getTime();
 
-      this.autoLogout(expirationDuration);
+      // this.autoLogout(expirationDuration);
     }
   }
 
@@ -135,6 +135,6 @@ export class AuthStoreService extends ObservableStore<StoreState> implements OnI
     this.cookie.set('accessToken', tokenData.accessToken);
     this.cookie.set('expiresIn', tokenData.expiresIn.toString());
 
-    this.autoLogout(tokenData.expiresIn);
+    // this.autoLogout(tokenData.expiresIn);
   }
 }
