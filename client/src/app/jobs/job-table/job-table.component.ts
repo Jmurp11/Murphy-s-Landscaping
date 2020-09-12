@@ -51,7 +51,8 @@ export class JobTableComponent implements OnInit, OnDestroy {
       'isPaid'
     ];
 
-    this.jobSub = this.apolloSdk.jobs()
+    this.jobSub = this.apolloSdk.jobsWatch()
+      .valueChanges
       .subscribe(data => {
         this.jobs = data.data.jobs;
         console.log(this.jobs);

@@ -19,6 +19,48 @@ query users {
   }
 }
 
+query customers {
+  customers {
+    id
+    firstName
+    lastName
+    fullName
+    initialName
+    email
+    phone
+    address {
+      street
+      city
+      state
+      zip
+    }
+    role
+    confirmed
+    creationTime
+  }
+}
+
+query employees {
+  employees {
+    id
+    firstName
+    lastName
+    fullName
+    initialName
+    email
+    phone
+    address {
+      street
+      city
+      state
+      zip
+    }
+    role
+    confirmed
+    creationTime
+  }
+}
+
 query user($data: UserInput!) {
   user(input: $data) {
     id
@@ -39,3 +81,5 @@ query user($data: UserInput!) {
     creationTime
   }
 }
+
+

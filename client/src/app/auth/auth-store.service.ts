@@ -5,7 +5,7 @@ import { of, Observable, timer } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { ApolloQueryResult } from 'apollo-client';
 import { Router } from '@angular/router';
-import { ApolloAngularSDK, MeQuery, LoginInput } from '../generated/graphql';
+import { ApolloAngularSDK, MeQuery, LoginInput, ExpenseInput, JobInput } from '../generated/graphql';
 import { CookieService } from 'ngx-cookie-service';
 
 
@@ -123,17 +123,18 @@ export class AuthStoreService extends ObservableStore<StoreState> implements OnI
       accessToken: string,
       expiresIn: number
     }) {
-    const user = {
-      data: {
-        me: userData
-      }
-    };
-    this.setState({ currentUser: user }, 'LOGIN');
-    this.cookie.set('id', userData.id);
-    this.cookie.set('fullName', userData.fullName);
-    this.cookie.set('role', userData.role);
-    this.cookie.set('accessToken', tokenData.accessToken);
-    this.cookie.set('expiresIn', tokenData.expiresIn.toString());
+      const user = {
+        data: {
+          me: userData
+        }
+      };
+
+      this.setState({ currentUser: user }, 'LOGIN');
+      this.cookie.set('id', userData.id);
+      this.cookie.set('fullName', userData.fullName);
+      this.cookie.set('role', userData.role);
+      this.cookie.set('accessToken', tokenData.accessToken);
+      this.cookie.set('expiresIn', tokenData.expiresIn.toString());
 
     // this.autoLogout(tokenData.expiresIn);
   }

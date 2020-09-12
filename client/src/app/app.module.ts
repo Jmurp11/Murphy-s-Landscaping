@@ -25,6 +25,7 @@ import { BreadcrumbComponent } from './ui/breadcrumb/breadcrumb.component';
 import { SigninComponent } from './auth/signin/signin.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { CookieService } from 'ngx-cookie-service';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 @NgModule({
   declarations: [

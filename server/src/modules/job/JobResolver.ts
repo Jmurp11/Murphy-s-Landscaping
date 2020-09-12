@@ -42,11 +42,10 @@ export class JobResolver {
   }
 
   @Mutation(() => Result)
-  @UseMiddleware(isAuth, logger)
+  @UseMiddleware(logger)
   async createJob(@Arg('input')
   {
     customer,
-    employee,
     cost,
     jobType
   }: JobInput): Promise<Result> {
@@ -54,7 +53,6 @@ export class JobResolver {
 
     await Job.create({
       customer,
-      employee,
       cost,
       jobType,
       dateRequested

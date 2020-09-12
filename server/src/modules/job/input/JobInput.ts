@@ -6,9 +6,6 @@ export class JobInput {
   customer: string;
 
   @Field()
-  employee: string;
-
-  @Field()
   cost: number;
 
   @Field()

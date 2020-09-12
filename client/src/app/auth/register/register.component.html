@@ -1,1 +1,91 @@
-<p>register works!</p>
+<div class="container" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1.0%">
+  <div class="form-container" fxFlex="100%">
+    <div class="main-loading" *ngIf="loading">
+      <app-loading></app-loading>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="register()" class="form" *ngIf="!loading">
+      <mat-card class="form-card">
+        <mat-card-header>
+          <div mat-card-avatar class="auth-header-image"></div>
+          <mat-card-title>Register</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="form-group">
+            <mat-form-field appearance="standard">
+              <mat-label>First Name</mat-label>
+              <input matInput placeholder="Enter First Name" type="text" formControlName="firstName" class="form-control">
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field appearance="standard">
+              <mat-label>Last Name</mat-label>
+              <input matInput placeholder="Enter Last Name" type="text" formControlName="lastName" class="form-control">
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field appearance="standard">
+              <mat-label>Email</mat-label>
+              <input matInput placeholder="Enter Email" type="text" formControlName="email" class="form-control">
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field appearance="standard">
+              <mat-label>Password</mat-label>
+              <input matInput placeholder="Enter Password" type="password" formControlName="password"
+                class="form-control" secure="true">
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field appearance="standard">
+              <mat-label>Phone</mat-label>
+              <input matInput placeholder="Enter Phone" type="text" formControlName="phone" class="form-control">
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field appearance="standard">
+              <mat-label>Street</mat-label>
+              <input matInput placeholder="Enter Street" type="text" formControlName="street" class="form-control">
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field appearance="standard">
+              <mat-label>City</mat-label>
+              <input matInput placeholder="Enter City" type="text" formControlName="city" class="form-control">
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field appearance="standard">
+              <mat-label>State</mat-label>
+              <input matInput placeholder="Enter State" type="text" formControlName="state" class="form-control">
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field appearance="standard">
+              <mat-label>Zip Code</mat-label>
+              <input matInput placeholder="Enter Zip Code" type="text" formControlName="zip" class="form-control">
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field appearance="standard">
+              <mat-label>Role</mat-label>
+              <input matInput placeholder="Enter Role" type="text" formControlName="role" class="form-control">
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="form-group">
+            <button mat-raised-button color="primary" [disabled]="loading" class="btn btn-primary auth-btn">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+              Register
+            </button>
+            <button mat-raised-button color="accent" class="auth-btn">Login</button>
+          </div>
+          <div class="center">
+            <button mat-button color="primary">Forgot Password</button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+    </form>
+  </div>
+</div>
+

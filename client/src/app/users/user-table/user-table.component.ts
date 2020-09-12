@@ -41,7 +41,8 @@ export class UserTableComponent implements OnInit, OnDestroy {
       'confirmed'
     ];
 
-    this.userSub = this.apolloSdk.users()
+    this.userSub = this.apolloSdk.usersWatch()
+      .valueChanges
       .subscribe(data => {
         this.users = data.data.users;
         console.log(this.users);

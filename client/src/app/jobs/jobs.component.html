@@ -1,2 +1,55 @@
-<app-job-table></app-job-table>
-<router-outlet></router-outlet>
+<div class="container" fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="1.0%">
+  <div class="form-container" fxFlex="100%">
+    <div class="main-loading" *ngIf="loading">
+      <app-loading></app-loading>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="addJob()" class="form" *ngIf="!loading">
+      <mat-card class="form-card">
+        <mat-card-header>
+          <div mat-card-avatar class="auth-header-image"></div>
+          <mat-card-title>Add Job</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <div class="form-group">
+            <mat-form-field appearance="standard">
+              <mat-label>Customer</mat-label>
+              <mat-select formControlName="customer">
+                <mat-option *ngFor="let customer of customers" [value]="customer">
+                  {{customer.fullName}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field appearance="standard">
+              <mat-label>Cost</mat-label>
+              <input matInput placeholder="Enter Cost" type="number" formControlName="cost" class="form-control">
+            </mat-form-field>
+          </div>
+          <div class="form-group">
+            <mat-form-field appearance="standard">
+              <mat-label>Job Type</mat-label>
+              <mat-select formControlName="jobType">
+                <mat-option *ngFor="let type of jobTypes" [value]="type">
+                  {{type}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+        <mat-card-actions>
+          <div class="form-group">
+            <button mat-raised-button color="primary" [disabled]="loading" class="btn btn-primary auth-btn">
+              <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+              Submit
+            </button>
+            <button mat-raised-button color="warn" (click)="reset()" class="auth-btn">Cancel</button>
+          </div>
+        </mat-card-actions>
+      </mat-card>
+    </form>
+  </div>
+</div>
+<div>
+  <app-job-table></app-job-table>
+</div>

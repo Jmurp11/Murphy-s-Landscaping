@@ -44,7 +44,8 @@ export class ExpenseTableComponent implements OnInit, OnDestroy {
       'jobType'
     ];
 
-    this.expenseSub = this.apolloSdk.expenses()
+    this.expenseSub = this.apolloSdk.expensesWatch()
+      .valueChanges
       .subscribe(data => {
         this.expenses = data.data.expenses;
         console.log(this.expenses);

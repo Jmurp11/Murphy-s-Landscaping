@@ -30,19 +30,19 @@ export type Address = {
 export type User = {
   __typename?: 'User';
   id: Scalars['String'];
-  email: Scalars['String'];
+  email?: Maybe<Scalars['String']>;
   password: Scalars['String'];
-  firstName: Scalars['String'];
-  lastName: Scalars['String'];
-  fullName: Scalars['String'];
-  initialName: Scalars['String'];
-  phone: Scalars['String'];
+  firstName?: Maybe<Scalars['String']>;
+  lastName?: Maybe<Scalars['String']>;
+  fullName?: Maybe<Scalars['String']>;
+  initialName?: Maybe<Scalars['String']>;
+  phone?: Maybe<Scalars['String']>;
   address?: Maybe<Array<Address>>;
-  role: Scalars['String'];
-  confirmed: Scalars['Boolean'];
-  tokenVersion: Scalars['Float'];
-  forgotPasswordLock: Scalars['Boolean'];
-  creationTime: Scalars['DateTime'];
+  role?: Maybe<Scalars['String']>;
+  confirmed?: Maybe<Scalars['Boolean']>;
+  tokenVersion?: Maybe<Scalars['Float']>;
+  forgotPasswordLock?: Maybe<Scalars['Boolean']>;
+  creationTime?: Maybe<Scalars['DateTime']>;
 };
 
 
@@ -54,9 +54,9 @@ export type Job = {
   isComplete: Scalars['Boolean'];
   isPaid: Scalars['Boolean'];
   dateRequested: Scalars['DateTime'];
-  dateCompleted: Scalars['DateTime'];
+  dateCompleted?: Maybe<Scalars['DateTime']>;
   cost: Scalars['Float'];
-  datePaid: Scalars['DateTime'];
+  datePaid?: Maybe<Scalars['DateTime']>;
   jobType: Scalars['String'];
   expenses?: Maybe<Array<Expense>>;
 };
@@ -65,7 +65,7 @@ export type Expense = {
   __typename?: 'Expense';
   id: Scalars['String'];
   cost: Scalars['Float'];
-  job: Job;
+  job?: Maybe<Job>;
   expenseType: Scalars['String'];
 };
 
@@ -114,7 +114,6 @@ export type ExpenseQueryInput = {
 
 export type JobInput = {
   customer: Scalars['String'];
-  employee: Scalars['String'];
   cost: Scalars['Float'];
   jobType: Scalars['String'];
 };
@@ -157,6 +156,8 @@ export type Query = {
   job: Job;
   me?: Maybe<User>;
   users: Array<User>;
+  customers: Array<User>;
+  employees: Array<User>;
   user: User;
 };
 
@@ -529,7 +530,7 @@ export type ExpensesQuery = (
   & { expenses: Array<(
     { __typename?: 'Expense' }
     & Pick<Expense, 'id' | 'cost' | 'expenseType'>
-    & { job: (
+    & { job?: Maybe<(
       { __typename?: 'Job' }
       & Pick<Job, 'id' | 'isComplete' | 'isPaid' | 'dateRequested' | 'dateCompleted' | 'cost' | 'datePaid' | 'jobType'>
       & { customer: (
@@ -543,7 +544,7 @@ export type ExpensesQuery = (
         { __typename?: 'User' }
         & Pick<User, 'firstName' | 'lastName' | 'fullName' | 'initialName' | 'role'>
       )> }
-    ) }
+    )> }
   )> }
 );
 
@@ -557,7 +558,7 @@ export type ExpenseQuery = (
   & { expense: (
     { __typename?: 'Expense' }
     & Pick<Expense, 'id' | 'cost' | 'expenseType'>
-    & { job: (
+    & { job?: Maybe<(
       { __typename?: 'Job' }
       & Pick<Job, 'id' | 'isComplete' | 'isPaid' | 'dateRequested' | 'dateCompleted' | 'cost' | 'datePaid' | 'jobType'>
       & { customer: (
@@ -571,7 +572,7 @@ export type ExpenseQuery = (
         { __typename?: 'User' }
         & Pick<User, 'firstName' | 'lastName' | 'fullName' | 'initialName' | 'role'>
       )> }
-    ) }
+    )> }
   ) }
 );
 
@@ -673,6 +674,36 @@ export type UsersQueryVariables = Exact<{ [key: string]: never; }>;
 export type UsersQuery = (
   { __typename?: 'Query' }
   & { users: Array<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'firstName' | 'lastName' | 'fullName' | 'initialName' | 'email' | 'phone' | 'role' | 'confirmed' | 'creationTime'>
+    & { address?: Maybe<Array<(
+      { __typename?: 'Address' }
+      & Pick<Address, 'street' | 'city' | 'state' | 'zip'>
+    )>> }
+  )> }
+);
+
+export type CustomersQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type CustomersQuery = (
+  { __typename?: 'Query' }
+  & { customers: Array<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'firstName' | 'lastName' | 'fullName' | 'initialName' | 'email' | 'phone' | 'role' | 'confirmed' | 'creationTime'>
+    & { address?: Maybe<Array<(
+      { __typename?: 'Address' }
+      & Pick<Address, 'street' | 'city' | 'state' | 'zip'>
+    )>> }
+  )> }
+);
+
+export type EmployeesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type EmployeesQuery = (
+  { __typename?: 'Query' }
+  & { employees: Array<(
     { __typename?: 'User' }
     & Pick<User, 'id' | 'firstName' | 'lastName' | 'fullName' | 'initialName' | 'email' | 'phone' | 'role' | 'confirmed' | 'creationTime'>
     & { address?: Maybe<Array<(
@@ -1312,6 +1343,66 @@ export const UsersDocument = gql`
     document = UsersDocument;
     
   }
+export const CustomersDocument = gql`
+    query customers {
+  customers {
+    id
+    firstName
+    lastName
+    fullName
+    initialName
+    email
+    phone
+    address {
+      street
+      city
+      state
+      zip
+    }
+    role
+    confirmed
+    creationTime
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CustomersGQL extends Apollo.Query<CustomersQuery, CustomersQueryVariables> {
+    document = CustomersDocument;
+    
+  }
+export const EmployeesDocument = gql`
+    query employees {
+  employees {
+    id
+    firstName
+    lastName
+    fullName
+    initialName
+    email
+    phone
+    address {
+      street
+      city
+      state
+      zip
+    }
+    role
+    confirmed
+    creationTime
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class EmployeesGQL extends Apollo.Query<EmployeesQuery, EmployeesQueryVariables> {
+    document = EmployeesDocument;
+    
+  }
 export const UserDocument = gql`
     query user($data: UserInput!) {
   user(input: $data) {
@@ -1382,6 +1473,8 @@ export const UserDocument = gql`
       private jobsByCustomerGql: JobsByCustomerGQL,
       private meGql: MeGQL,
       private usersGql: UsersGQL,
+      private customersGql: CustomersGQL,
+      private employeesGql: EmployeesGQL,
       private userGql: UserGQL
     ) {}
       
@@ -1507,6 +1600,22 @@ export const UserDocument = gql`
     
     usersWatch(variables?: UsersQueryVariables, options?: WatchQueryOptionsAlone<UsersQueryVariables>) {
       return this.usersGql.watch(variables, options)
+    }
+    
+    customers(variables?: CustomersQueryVariables, options?: QueryOptionsAlone<CustomersQueryVariables>) {
+      return this.customersGql.fetch(variables, options)
+    }
+    
+    customersWatch(variables?: CustomersQueryVariables, options?: WatchQueryOptionsAlone<CustomersQueryVariables>) {
+      return this.customersGql.watch(variables, options)
+    }
+    
+    employees(variables?: EmployeesQueryVariables, options?: QueryOptionsAlone<EmployeesQueryVariables>) {
+      return this.employeesGql.fetch(variables, options)
+    }
+    
+    employeesWatch(variables?: EmployeesQueryVariables, options?: WatchQueryOptionsAlone<EmployeesQueryVariables>) {
+      return this.employeesGql.watch(variables, options)
     }
     
     user(variables: UserQueryVariables, options?: QueryOptionsAlone<UserQueryVariables>) {

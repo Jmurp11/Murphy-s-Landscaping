@@ -1,3 +1,12 @@
+<p>
+  <mat-toolbar>
+    <span>Murphy's Mowing</span>
+    <span class="example-spacer"></span>
+    <span flex></span>
+    <button class="signOut" mat-icon-button (click)="signOut()">Sign out</button>
+  </mat-toolbar>
+</p>
+
 <div>
   <span>
     <button mat-raised-button color="primary" (click)="navigate('users')">Users</button>
@@ -11,5 +20,4 @@
     <button mat-raised-button color="primary" (click)="navigate('expenses')">Expenses</button>
   </span>
 </div>
-
 <router-outlet></router-outlet>

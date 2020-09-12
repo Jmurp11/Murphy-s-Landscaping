@@ -31,6 +31,30 @@ export class UserResolver {
     });
   }
 
+  @Query(() => [User])
+  async customers() {
+    return User.find({
+      relations: [
+        'address'
+      ],
+      where: {
+        role: 'Customer'
+      }
+    });
+  }
+
+  @Query(() => [User])
+  async employees() {
+    return User.find({
+      relations: [
+        'address'
+      ],
+      where: {
+        role: 'Employee'
+      }
+    });
+  }
+
   @Query(() => User)
   async user(@Arg("input") {
     id
